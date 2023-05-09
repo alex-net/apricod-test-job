@@ -1,0 +1,113 @@
+get:
+  summary: Список студий-разработчиков игр
+  tags:
+    - studios
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/p'
+    - $ref: 'params.yml#/pp'
+
+  responses:
+    200:
+      description: Список сущностей студий-разработчиков
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: true
+              list:
+                - id: 5
+                  name: Студия 1
+                - id: 8
+                  name: Студия 2
+
+postBody:
+  description: Данные новой студии-разработчика
+  required: true
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            maxLength: 50
+        required:
+          - name
+
+put-delete-response: &put-delete-response
+  content:
+    application/json:
+      schema:
+        type: object
+        example:
+          ok: true
+
+post:
+  summary: Создание новой студии-разработчика игр
+  tags:
+    - studios
+  parameters:
+    - $ref: 'params.yml#/format'
+  requestBody:
+    $ref: '#/postBody'
+  responses:
+    200:
+      description: Успешно создана студаия-разаботчик
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: true
+              id: 65
+    500:
+      description: Возникли ошибки при добавлении объекта
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: false
+              errors:
+                name:
+                  - Значение «Наименование» должно содержать максимум 50 символа.
+
+
+put:
+  summary: Обновление студии-разработчика игр
+  tags:
+    - studios
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/id'
+  requestBody:
+    $ref: '#/postBody'
+
+  responses:
+    200:
+      <<: *put-delete-response
+      description: Успешно обновлена студаия-разаботчик
+    500:
+      description: ошибка валидации
+    404:
+      description: Сущность не найдена
+
+
+
+delete:
+  summary: Удаление студии-разработчика игр
+  tags:
+    - studios
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/id'
+  responses:
+    200:
+      <<: *put-delete-response
+      description: Успешно удалена студаия-разаботчик
+    500:
+      description: ошибка валидации
+    404:
+      description: Сущность не найдена

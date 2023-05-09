@@ -1,0 +1,114 @@
+get:
+  summary: Список игр
+  tags:
+    - games
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/cat'
+    - $ref: 'params.yml#/p'
+    - $ref: 'params.yml#/pp'
+
+  responses:
+    200:
+      description: Список сущностей игр
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: true
+              list:
+                - id: 5
+                  name: Категория 1
+                  studioName: студия 1
+                  cats:
+                    - Категория 1
+                    - Категория 2
+
+                - id: 8
+                  name: Категория 2
+                  studioName: студия 2
+                  cats:
+                    - Категория 1
+                    - Категория 2
+
+postBody:
+  description: Данные новой Игры
+  required: true
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            maxLength: 100
+          studio_id:
+            type: integer
+            minnimum: 1
+          cat_id:
+            type: array
+            items:
+              type: integer
+        required:
+          - name
+          - studio_id
+          - cat_id
+
+put-delete-response: &put-delete-response
+  content:
+    application/json:
+      schema:
+        type: object
+        example:
+          ok: true
+
+post:
+  summary: Создание новой игры
+  tags:
+    - games
+  parameters:
+    - $ref: 'params.yml#/format'
+  requestBody:
+    $ref: '#/postBody'
+
+  responses:
+    200:
+      description: Успешно создана новая игра
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: true
+              id: 65
+              cat-bind-errs:
+                - cat_id:
+                  - Ошибка валидации поля cat_id
+
+put:
+  summary: Обновление полей игры
+  tags:
+    - games
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/id'
+  requestBody:
+    $ref: '#/postBody'
+  responses:
+    200:
+      <<: *put-delete-response
+      description: Успешно обновлена запись игры
+
+
+delete:
+  summary: Удаление игры
+  tags:
+    - games
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/id'
+  responses:
+    200:
+      <<: *put-delete-response
+      description: Успешно удалена игра

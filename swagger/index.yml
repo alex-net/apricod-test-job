@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: Тестове заданиее от компании ООО "Априкод"
+  version: 0.1.0
+
+tags:
+  - name: studios
+    description: Студия-разработчик
+  - name: cats
+    description: Категория игры
+  - name: games
+    description: Игра
+
+servers:
+  - url: http://127.0.0.1:8081/v1
+    description: Базовый путь для тестироания...
+
+paths:
+
+  /studios{format}:
+    get:
+      $ref: 'studios.yml#/get'
+    post:
+      $ref: 'studios.yml#/post'
+  /studios/{id}{format}:
+    put:
+      $ref: 'studios.yml#/put'
+    delete:
+      $ref: 'studios.yml#/delete'
+
+  /cats{format}:
+    get:
+      $ref: 'cats.yml#/get'
+    post:
+      $ref: 'cats.yml#/post'
+  /cats/{id}{format}:
+    put:
+      $ref: 'cats.yml#/put'
+    delete:
+      $ref: 'cats.yml#/delete'
+
+  /games{format}:
+    get:
+      $ref: 'games.yml#/get'
+    post:
+      $ref: 'games.yml#/post'
+  /games/{id}{format}:
+    put:
+      $ref: 'games.yml#/put'
+    delete:
+      $ref: 'games.yml#/delete'
+
+
+
+

@@ -1,0 +1,52 @@
+format:
+  in: path
+  name: format
+  description: Формат ответа
+  schema:
+    type: string
+    enum:
+      - .xml
+      - .json
+    default: '.json'
+  allowEmptyValue: true
+
+p:
+  in: query
+  name: p
+  description: Страница просмотра (работает вместе с pp)
+  schema:
+    type: integer
+    minimum: 1
+    default: 1
+    nullable: true
+
+pp:
+  in: query
+  name: pp
+  description: Элементов на страницу (работает вместе с p)
+  schema:
+    type: integer
+    minimum: 1
+    default: 20
+    nullable: true
+
+
+id:
+  in: path
+  name: id
+  description: Номер сущности
+  schema:
+    type: integer
+    minimum: 1
+  required: true
+
+
+
+cat:
+  in: query
+  name: cat
+  description: Номер категории для фильтрации игр
+  schema:
+    type: integer
+    minimum: 1
+    nullable: true

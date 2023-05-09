@@ -1,0 +1,115 @@
+get:
+  summary: Список категорий игр
+  tags:
+    - cats
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/p'
+    - $ref: 'params.yml#/pp'
+
+  responses:
+    200:
+      description: Список сущностей категории игр
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: true
+              list:
+                - id: 5
+                  name: Категория 1
+                - id: 8
+                  name: Категория 2
+
+postBody:
+  description: Данные новой категории
+  required: true
+  content:
+    application/x-www-form-urlencoded:
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+            maxLength: 50
+        required:
+          - name
+
+put-delete-response: &put-delete-response
+  content:
+    application/json:
+      schema:
+        type: object
+        example:
+          ok: true
+
+post404:
+  description: Сущность не найдена
+post500:
+  description: Возникли ошибки при добавлении объекта
+  content:
+    application/json:
+      schema:
+        type: object
+        example:
+          ok: false
+          errors:
+            name:
+              - Значение «Наименование» должно содержать максимум 50 символа.
+
+post:
+  summary: Создание новой категории игр
+  tags:
+    - cats
+  parameters:
+    - $ref: 'params.yml#/format'
+  requestBody:
+    $ref: '#/postBody'
+
+  responses:
+    200:
+      description: Успешно создана категория игр
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: true
+              id: 65
+    500:
+      $ref: '#/post500'
+
+
+put:
+  summary: Обновление категории игр
+  tags:
+    - cats
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/id'
+  requestBody:
+    $ref: '#/postBody'
+  responses:
+    200:
+      <<: *put-delete-response
+      description: Успешно обновлена категория игр
+    500:
+      $ref: '#/post500'
+    404:
+      $ref: '#/post404'
+
+
+delete:
+  summary: Удаление категории игр
+  tags:
+    - cats
+  parameters:
+    - $ref: 'params.yml#/format'
+    - $ref: 'params.yml#/id'
+  responses:
+    200:
+      <<: *put-delete-response
+      description: Успешно удалена категория игр
+    404:
+      $ref: '#/post404'
