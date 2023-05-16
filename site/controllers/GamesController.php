@@ -33,4 +33,21 @@ class GamesController extends ObjController
         }
         return ['ok' => false, 'errors' => $model->errors];
     }
+
+    /**
+     * Удаление записи
+     *
+     * @return     array  ( description_of_the_return_value )
+     */
+    public function actionDelete()
+    {
+        $model = $this->getModel();
+        if ($model->studio_id || $model->getGameCats()->count()) {
+            return ['ok' => 'false', 'error' => 'Сущность содержит ' . ($model->studio_id ? 'студию' : 'набор категорий')];
+        }
+        if ($model->delete()) {
+            return ['ok' => true];
+        }
+        return ['ok' => 'false', 'error' => 'Сущность не найдена'];
+    }
 }

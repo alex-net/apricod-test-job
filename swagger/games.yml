@@ -112,3 +112,12 @@ delete:
     200:
       <<: *put-delete-response
       description: Успешно удалена игра
+    500:
+      description: 'Удаление несуществующей сущности или содержащей студию или категории'
+      content:
+        application/json:
+          schema:
+            type: object
+            example:
+              ok: false
+              errors: []
